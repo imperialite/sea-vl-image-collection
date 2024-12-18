@@ -5,7 +5,7 @@ If you have many images to contribute to SEAVL, you are welcome to refer to this
 
 ## Steps
 
-1. Upload the images to the `data` folder  [SEA-VL image collection Github Repo](https://github.com/SEACrowd/sea-vl-image-collection ) 
+1. Upload the images to the `data` folder in this [repo](https://github.com/SEACrowd/sea-vl-image-collection ) 
 	 - ⚠️ Please follow the current naming convention, each photo file should be named as `{file_name} - {your_name}.{extension}`.
 
 	 - ⚠️ Keep the maximum image width/height to 2000px, so you might need to resize some images, you can use the following code to resize the image.
