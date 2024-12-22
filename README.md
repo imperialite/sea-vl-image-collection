@@ -29,4 +29,4 @@ If you have many images to contribute to SEAVL, you are welcome to refer to this
 	- ⚠️ For the `image` column, please fill it with `https://raw.githubusercontent.com/SEACrowd/sea-vl-image-collection/refs/heads/main/data/%7Bfile_name%7D`. `file_name` should be the same as the one you submitted to the repository.
 3.  As the last step, you can send us the CSV through discord / email (contact.ruochen@gmail.com or samuel.cahyawijaya@gmail.com) and we will review the CSV and images. If there is no issue, we will push the photos to the annotation platform.
 
-**Any questions?** Message us on [discord](https://discord.gg/URdhUGsBUQ)
+**Any questions?** Message us on [discord](https://discord.gg/URdhUGsBUQ)!
