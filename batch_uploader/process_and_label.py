@@ -254,20 +254,15 @@ def get_image_resized_dims(img, max_edge=2000):
     
     return (w, h)
 
-
 def resize_and_write_image(input_path, output_path):
     image = Image.open(input_path)
     (w, h) = get_image_resized_dims(image)
     image = image.resize((w, h), Image.BILINEAR) 
     image.save(output_path)
 
-def get_responses_for_image(img_path):
-    pass
-
 def get_img_github_path(img_path):
     url_encoded_fname = urllib.parse.quote(img_path.name)
     return DATA_URL + url_encoded_fname
-
 
 if __name__ == '__main__':
     u = UIRepresentation()
