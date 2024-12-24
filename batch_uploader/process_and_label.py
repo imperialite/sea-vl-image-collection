@@ -60,6 +60,9 @@ class BatchUploadCSVCreator():
                     "text_image_loc,text_submitter_native_lang,updated_at\n")
     
     def add_line(self, image_name, cap_en, cap_native, culture_loc, image_loc, id=""):
+        '''
+        Add a line into the csv
+        '''
         current_date = date.today()
         curr_date = current_date.strftime("%d/%m/%Y")
 
@@ -76,18 +79,30 @@ class BatchUploadCSVCreator():
                     image_loc,self.native_lang,""])
     
     def get_image_destination_path(self, img_path):
+        '''
+        Convert the image name to add in the name at the end
+        '''
         dest_filename = img_path.stem + " - " + self.name + img_path.suffix
         return DATA_DIR / dest_filename
     
     def get_named_uuid(self):
+        '''
+        Get a UUID that includes the name
+        '''
         return str(uuid.uuid4()) + "-" + self.name.replace(' ', '_')
 
     def process_single_image(self, img_path, cap_en, cap_native, culture_loc, img_loc, id=""):
+        '''
+        Process a single image, resizing it, moving it, and adding in a line into the csv
+        '''
         dest_path = self.get_image_destination_path(img_path)
         resize_and_write_image(img_path, dest_path)
         self.add_line(get_img_github_path(dest_path), cap_en, cap_native, culture_loc, img_loc, id)
 
     def process_file_or_folder(self, fpath, cap_en, cap_native, culture_loc, img_loc):
+        '''
+        Process a file or a set of closely related images present in a folder
+        '''
         if os.path.isfile(fpath):
             self.process_single_image(fpath, cap_en, cap_native, culture_loc, img_loc)
         else:
@@ -107,6 +122,9 @@ class BatchUploadCSVCreator():
         shutil.move(fpath, DUMP_DIR / "")
 
     def get_next_image(self):
+    '''
+    Get the next image or folder to be processed in `INPUT_DIR`
+    '''
         for f in sorted(os.listdir(INPUT_DIR)):
             if f.startswith('.') or f.startswith('__'):
                 print(f"Ignoring file {f}")
@@ -193,8 +211,11 @@ class UIRepresentation():
         self.populate_ui_with_next()
 
         self.root.mainloop()
-    
+
     def populate_ui_with_next(self):
+        '''
+        Load next image into UI
+        '''
         next_img_path = next(self.img_iterator)
         print(f"Image shown: {next_img_path}")
 
@@ -218,6 +239,9 @@ class UIRepresentation():
 
 
     def populate_image(self, path):
+        '''
+        Add specific image in `path` into UI
+        '''
         image = Image.open(path)
         image.thumbnail(get_image_resized_dims(image, 400))  # Resize the image
         photo = ImageTk.PhotoImage(image)
@@ -225,6 +249,9 @@ class UIRepresentation():
         self.image_label.image = photo  # Keep a reference to the image
 
     def process_image_and_populate_next(self):
+        '''
+        Process the current image and populate the next one into the UI
+        '''
         cap_en = self.en_text_entry.get("1.0", tk.END)
         cap_native = self.native_text_entry.get("1.0", tk.END)
         img_loc = self.photo_loc_text_entry.get("1.0", tk.END)
@@ -242,6 +269,9 @@ class UIRepresentation():
         self.populate_ui_with_next()
 
 def get_image_resized_dims(img, max_edge=2000):
+    '''
+    Get dimensions of an image in which the largest edge is `max_edge`
+    '''
     (w, h) = img.size
 
     if w > max_edge or h > max_edge:
@@ -255,12 +285,18 @@ def get_image_resized_dims(img, max_edge=2000):
     return (w, h)
 
 def resize_and_write_image(input_path, output_path):
+    '''
+    Resize image in `input_path` and write it to `output_path`
+    '''
     image = Image.open(input_path)
     (w, h) = get_image_resized_dims(image)
     image = image.resize((w, h), Image.BILINEAR) 
     image.save(output_path)
 
 def get_img_github_path(img_path):
+    '''
+    Given an image at `img_path`, return the (expected) Github URL
+    '''
     url_encoded_fname = urllib.parse.quote(img_path.name)
     return DATA_URL + url_encoded_fname
 
