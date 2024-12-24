@@ -87,14 +87,6 @@ class BatchUploadCSVCreator():
         resize_and_write_image(img_path, dest_path)
         self.add_line(get_img_github_path(dest_path), cap_en, cap_native, culture_loc, img_loc, id)
 
-    def get_caption_and_process_image(self, img_path, id=""):
-        '''
-        Deprecated
-        '''
-        cap_en, cap_native, culture_loc, img_loc = get_responses_for_image(img_path)
-        self.process_single_image(img_path, cap_en, cap_native, culture_loc, img_loc, id)
-        return cap_en, cap_native, culture_loc, img_loc
-
     def process_file_or_folder(self, fpath, cap_en, cap_native, culture_loc, img_loc):
         if os.path.isfile(fpath):
             self.process_single_image(fpath, cap_en, cap_native, culture_loc, img_loc)
@@ -114,27 +106,6 @@ class BatchUploadCSVCreator():
             
         shutil.move(fpath, DUMP_DIR / "")
 
-    def process_file_or_folder_old(self, f):
-        '''
-        Deprecated
-        '''
-        if os.path.isfile(INPUT_DIR / f):
-            self.get_caption_and_process_image(INPUT_DIR / f)
-        else:
-            subdir = INPUT_DIR / f
-            assert os.path.isdir(subdir), f"{subdir} is not a"\
-                " file and not a directory? What sorcery is this?"
-            subdir_img_group = \
-                [f for f in os.listdir(subdir) if not (f.startswith('.') or f.startswith('__'))]
-            
-            id_prefix = self.get_named_uuid() + "-"
-            
-            cap_en, cap_native, culture_loc, img_loc = \
-                self.get_caption_and_process_image(subdir / subdir_img_group[0], id_prefix + "0")
-            
-            for idx, img in enumerate(subdir_img_group[1:]):
-                self.process_single_image(subdir / img, cap_en, cap_native, culture_loc, img_loc, id_prefix + str(idx))
-
     def get_next_image(self):
         for f in os.listdir(INPUT_DIR):
             if f.startswith('.') or f.startswith('__'):
@@ -151,25 +122,6 @@ class UIRepresentation():
         self.root = tk.Tk()
         self.root.title("SEA-VL Batch Uploader")
 
-        # #---------- Scroll frame
-        # self.canvas = tk.Canvas(self.root)
-        # self.canvas.pack(side=tk.LEFT)
-
-        # self.scrollbar = tk.Scrollbar(self.root, command=self.canvas.yview)
-        # self.scrollbar.pack(side=tk.LEFT, fill='y')
-
-        # self.canvas.configure(yscrollcommand = self.scrollbar.set)
-
-        # # update scrollregion after starting 'mainloop'
-        # # when all widgets are in canvas
-        # self.canvas.bind('<Configure>', self.on_configure)
-
-        # # --- put frame in canvas ---
-
-        # self.frame = tk.Frame(self.canvas)
-        # self.canvas.create_window((0,0), window=self.frame, anchor='nw')
-
-        # #---------- Scroll frame
         self.frame = self.root
 
         self.image_label = tk.Label(self.frame)
@@ -241,11 +193,6 @@ class UIRepresentation():
         self.populate_ui_with_next()
 
         self.root.mainloop()
-
-    def on_configure(self, event):
-        # update scrollregion after starting 'mainloop'
-        # when all widgets are in canvas
-        self.canvas.configure(scrollregion=self.canvas.bbox('all'))
     
     def populate_ui_with_next(self):
         next_img_path = next(self.img_iterator)
@@ -290,20 +237,9 @@ class UIRepresentation():
 
         culture_loc = ', '.join(culture_loc_list)
 
-        # print("Text for the image:", text)
-        # print("Selected option:", option_var.get())
-
         self.batch_uploader.process_file_or_folder(self.curr_img, cap_en, cap_native, culture_loc, img_loc)
 
         self.populate_ui_with_next()
-
-
-    def show_warning(self):
-        # temp_root = tk.Tk()
-        # temp_root.withdraw()  # Hide the temporary window
-        # temp_root.focus_force()  # Bring the temporary window to the foreground
-        messagebox.showwarning("Warning", "This is a warning message.")
-        # temp_root.destroy()  # Destroy the temporary window
 
 def get_image_resized_dims(img, max_edge=2000):
     (w, h) = img.size
