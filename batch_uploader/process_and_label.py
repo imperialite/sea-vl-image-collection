@@ -107,7 +107,7 @@ class BatchUploadCSVCreator():
         shutil.move(fpath, DUMP_DIR / "")
 
     def get_next_image(self):
-        for f in os.listdir(INPUT_DIR):
+        for f in sorted(os.listdir(INPUT_DIR)):
             if f.startswith('.') or f.startswith('__'):
                 print(f"Ignoring file {f}")
                 continue
