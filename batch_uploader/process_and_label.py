@@ -66,17 +66,17 @@ class BatchUploadCSVCreator():
         current_date = date.today()
         curr_date = current_date.strftime("%d/%m/%Y")
 
-        if not cap_native and self.native_lang == "English (eng)":
+        if not cap_native.strip() and self.native_lang == "English (eng)":
             cap_native = cap_en
 
-        if not cap_en and self.native_lang == "English (eng)":
+        if not cap_en.strip() and self.native_lang == "English (eng)":
             cap_en = cap_native
 
         with open(self.result_csv, "a") as out_csv:
             writer = csv.writer(out_csv)
             writer.writerow(["","","seacrowd.research@gmail.com",curr_date,curr_date,
-                    id,image_name,"",cap_en,cap_native,culture_loc,
-                    image_loc,self.native_lang,""])
+                    id,image_name,"",cap_en.strip(),cap_native.strip(),culture_loc.strip(),
+                    image_loc.strip(),self.native_lang,""])
     
     def get_image_destination_path(self, img_path):
         '''
