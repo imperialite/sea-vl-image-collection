@@ -191,7 +191,7 @@ class UIRepresentation():
             self.culture_checkbox_list.append(cbox)
 
         photo_loc_var = tk.StringVar()
-        photo_loc_var.set("City, Country where photo was clicked")
+        photo_loc_var.set("City, Country where photo was taken")
 
         self.photo_loc = tk.Label(self.frame, 
                         textvariable=photo_loc_var)
