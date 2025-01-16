@@ -57,7 +57,7 @@ class BatchUploadCSVCreator():
             with open(self.result_csv, "a") as out_csv:
                 out_csv.write("annotation_id,annotator,email,created_at,timestamp,"\
                     "id,image,lead_time,text_cap_en,text_cap_native,text_culture_loc,"\
-                    "text_image_loc,text_submitter_native_lang,updated_at\n")
+                    "text_image_loc,text_submitter_native_lang,updated_at,similarity_id\n")
     
     def add_line(self, image_name, cap_en, cap_native, culture_loc, image_loc, id=""):
         '''
@@ -75,8 +75,8 @@ class BatchUploadCSVCreator():
         with open(self.result_csv, "a") as out_csv:
             writer = csv.writer(out_csv)
             writer.writerow(["","","seacrowd.research@gmail.com",curr_date,curr_date,
-                    id,image_name,"",cap_en.strip(),cap_native.strip(),culture_loc.strip(),
-                    image_loc.strip(),self.native_lang,""])
+                    "",image_name,"",cap_en.strip(),cap_native.strip(),culture_loc.strip(),
+                    image_loc.strip(),self.native_lang,"",id])
     
     def get_image_destination_path(self, img_path):
         '''
