@@ -145,6 +145,9 @@ class UIRepresentation():
         self.image_label = tk.Label(self.frame)
         self.image_label.pack()
 
+        clear_button = tk.Button(self.frame, text="Clear", command=self.clear_form)
+        clear_button.pack()
+
         native_text_var = tk.StringVar()
         native_text_var.set("Native Language Description")
 
@@ -236,6 +239,14 @@ class UIRepresentation():
         else:
             self.curr_img = next_img_path
             self.populate_image(next_img_path)
+
+    def clear_form(self):
+        self.native_text_entry.delete('1.0', tk.END)
+        self.en_text_entry.delete('1.0', tk.END)
+        self.photo_loc_text_entry.delete('1.0', tk.END)
+
+        for cv in self.culture_var_list:
+            cv.set(0)
 
 
     def populate_image(self, path):
