@@ -5,22 +5,22 @@ If you have many images to contribute to SEAVL, you are welcome to refer to this
 
 ## UI Tool-based Upload
 
-There is now a UI tool that can help make the process of adding in the image descriptions and generating the required CSVs much easier.
+> [!TIP]
+> We now have a UI tool that can make the process of adding the image descriptions and generating the required CSVs much easier!
 
-1. Fill out your details in the `contributor_details.yaml` file. You only need to do this the first time.
+1. Navigate into the `batch_uploader` folder. Fill out your details in the `contributor_details.yaml` file. You only need to do this the first time.
 2. Place images in the `./to_upload` folder as follows:
 	* Any individual images may be kept directly in the `./to_upload` folder
-	* If submitting multiple images that are very closely related to each other (for example, the same object or food photographed from multiple angles or with different levels of zoom), place all such images in a single sub-folder within the `./to_upload` folder
+	* If submitting multiple images that are very closely related to each other (e.g. the same object photographed from multiple angles or with different levels of zoom), place all such images in a single sub-folder within the `./to_upload` folder
 3. Run `process_and_label.py`:
 	* if the csv (`seavl_batch_labels - YOUR NAME.csv`) already exists, the script will warn you: type in `y` to continue, and the script will append to the existing csv. *IMPORTANT:* if you have already submitted the csv, type in `n`, manually delete the csv, and restart the script; otherwise, duplicate entries will be created in subsequent steps of the SEA-VL pipeline
 	* for each image shown, fill in the English and native language boxes, and click next. The following will happen:
 		* a new line will be added to the csv
 		* the image (or all the images, if the image shown was part of a sub-folder) will be added to the `../data` folder after being processed (resized and renamed as required)
 		* the image or sub-folder will be moved into the `./processing_complete` folder
-4. Submit your hard work! Thank you for you contribution:
+4. Submit your hard work:
 	* raise a PR with the new images added into the `../data/` folder
-	* send us the `seavl_batch_labels - YOUR NAME.csv` CSV through discord / email and we will review the CSV and images. If there is no issue, we will push the photos to the annotation platform
-
+	* send us the `seavl_batch_labels - YOUR NAME.csv` CSV through Discord / email for review.
 
 ## Manual Upload
 
